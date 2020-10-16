@@ -17,7 +17,7 @@ audio_config = texttospeech.AudioConfig(
 )
 
 def create_voice(msg):
-    synthesis_input = texttospeech.SynthesisInput(text=msg)
+    synthesis_input = texttospeech.SynthesisInput(ssml=msg)
     response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
     with open("voice.mp3", "wb") as out:
         out.write(response.audio_content)
@@ -36,7 +36,7 @@ def bot():
         if response:
             msg = response.decode('utf-8')
             print(f'saying: "{msg}"')
-            speak(f'a. {msg}')
+            speak(f'<speak><break time="1s"/>{msg.capitalize()}</speak>')
 
 
 if __name__ == '__main__':
