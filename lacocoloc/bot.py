@@ -3,9 +3,7 @@ import redis
 from .speaker import speak
 from .utils import debug
 
-REDIS_URL = 'redis://h:p536dfe7c3cbbcc9c049d0f0d127697e6fb9c63e17b15b7ab2ad50b22d30088fb@ec2-63-35-120-48.eu-west-1.compute.amazonaws.com:10449'
-
-redis_client = redis.Redis(host='ec2-54-170-172-162.eu-west-1.compute.amazonaws.com', port='12319',
+redis_client = redis.Redis(host='ec2-63-35-120-48.eu-west-1.compute.amazonaws.com', port='10449',
                            password='p536dfe7c3cbbcc9c049d0f0d127697e6fb9c63e17b15b7ab2ad50b22d30088fb')
 
 
