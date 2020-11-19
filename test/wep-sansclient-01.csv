@@ -1,0 +1,7 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+68:A3:78:62:5C:9D, 2020-10-18 16:36:14, 2020-10-18 16:43:57,  3,  54, WEP, WEP,   , -71,      547,        0,   0.  0.  0.  0,  14, freebox_PDPZLP, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+F8:59:71:C1:D1:1C, 2020-10-18 16:38:11, 2020-10-18 16:41:53,   0,       92, 68:A3:78:62:5C:9D,
+

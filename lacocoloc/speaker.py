@@ -1,16 +1,20 @@
 from google.cloud import texttospeech
 import playsound
+import os
 
 from .utils import debug
 
 TMP_FILE = '/tmp/output.mp3'
+CURRENT_FOLDER = os.path.dirname(__file__)
+NOTIFICATION_EFFECT_FILE = os.path.join(CURRENT_FOLDER, '../assets/notification.mp3')
 
 client = texttospeech.TextToSpeechClient()
 voice = texttospeech.VoiceSelectionParams(
     language_code="fr-FR-Standard-A", ssml_gender=texttospeech.SsmlVoiceGender.FEMALE
 )
 audio_config = texttospeech.AudioConfig(
-    audio_encoding=texttospeech.AudioEncoding.MP3
+    audio_encoding=texttospeech.AudioEncoding.MP3,
+    speaking_rate=.85
 )
 
 
@@ -25,7 +29,8 @@ def create_voice(msg: str):
 def speak(msg):
     try:
         debug('saying', msg)
-        create_voice(f'<speak><break time="1s"/>{msg}</speak>')
+        create_voice(f'<speak>{msg}</speak>')
+        playsound.playsound(NOTIFICATION_EFFECT_FILE)
         playsound.playsound(TMP_FILE)
     except Exception as e:
         debug('error', f'fail to speak with {e}')

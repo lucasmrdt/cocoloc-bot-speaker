@@ -1,13 +1,24 @@
 import redis
+import time
+import requests
+import re
 
 from .speaker import speak
 from .utils import debug
 
-redis_client = redis.Redis(host='ec2-63-35-120-48.eu-west-1.compute.amazonaws.com', port='10449',
-                           password='p536dfe7c3cbbcc9c049d0f0d127697e6fb9c63e17b15b7ab2ad50b22d30088fb')
+REDIS_URL_REGEX = r'.+://.+:(.+)@(.+):(.+)'
 
+
+def get_redis_client():
+    response = requests.get('https://la-cocoloc.herokuapp.com/redis-url')
+    redis_url = response.json()['url']
+    matches = re.match(REDIS_URL_REGEX, redis_url)
+    password, host, port = matches.group(1), matches.group(2), matches.group(3)
+    redis_client = redis.Redis(host=host, port=port, password=password)
+    return redis_client
 
 def bot():
+    redis_client = get_redis_client()
     debug('waiting message...')
     while True:
         _, response = redis_client.brpop('tts', timeout=0)
@@ -25,3 +36,5 @@ def main():
             break
         except Exception as e:
             debug('error', e)
+            time.sleep(10)
+
