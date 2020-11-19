@@ -2,6 +2,7 @@ import redis
 import time
 import requests
 import re
+import json
 
 from .speaker import speak
 from .utils import debug
@@ -17,14 +18,15 @@ def get_redis_client():
     redis_client = redis.Redis(host=host, port=port, password=password)
     return redis_client
 
+
 def bot():
     redis_client = get_redis_client()
     debug('waiting message...')
     while True:
         _, response = redis_client.brpop('tts', timeout=0)
         if response:
-            msg = response.decode('utf-8')
-            speak(msg)
+            data = json.loads(response.decode('utf-8'))
+            speak(msg=data['msg'], female_voice=data['female_voice'])
 
 
 def main():
@@ -37,4 +39,3 @@ def main():
         except Exception as e:
             debug('error', e)
             time.sleep(10)
-
